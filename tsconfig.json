@@ -27,5 +27,7 @@
     "declarationDir": "dist/types",
     "outDir": "dist/types",
   },
-  "include": ["src/**/*"]
+  "include": [
+    "packages/vue3/src/**/*"
+  ]
 }

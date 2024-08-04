@@ -1,0 +1,5 @@
+packages:
+  - "packages/**"
+  - "examples"
+  # 排除所有包含 test 的包
+  - '!**/test/**'

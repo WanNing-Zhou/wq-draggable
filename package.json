@@ -1,10 +1,9 @@
 {
-  "name": "wq-draggable",
-  "version": "1.0.0",
   "description": "一个基于vue3的拖拽布局",
   "scripts": {
+    "dev": "vite --config ./examples/vite.config.ts --host",
     "build": "vite build && vue-tsc",
-    "eslint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "eslint": "eslint --ext .js,.vue --ignore-path .gitignore --fix packages/vue3/src",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
@@ -17,7 +16,6 @@
     "draggable",
     "resizeable"
   ],
-  "author": "",
   "type": "module",
   "types": "dist/types/index.d.ts",
   "main": "dist/vue3-draggable-grid.cjs",
@@ -28,6 +26,7 @@
     "vue": "^3.4.29"
   },
   "devDependencies": {
+    "sass": "^1.77.8",
     "@ruabick/md-demo-plugins": "^0.3.3",
     "@ruabick/vitepress-demo-block": "^0.3.3",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
@@ -39,7 +38,6 @@
     "vite": "^5.3.1",
     "vitepress": "1.2.3",
     "vue-tsc": "^2.0.21",
-    "vue3-draggable-grid": "^0.0.6",
-    "scss": "^0.2.4"
+    "vue3-draggable-grid": "^0.0.6"
   }
 }
