@@ -1,0 +1,27 @@
+{
+  "name": "wq-draggable",
+  "description": "一个基于vue3+grid的拖拽布局",
+  "version": "1.0.3",
+  "keywords": [
+    "vue3",
+    "typescript",
+    "grid",
+    "layout",
+    "draggable",
+    "resizeable"
+  ],
+  "scripts": {
+    "build": "vite build && vue-tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "types": "dist/types/index.d.ts",
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.mjs",
+  "style": "dist/lib/style.css",
+  "license": "MIT",
+  "sideEffects": [
+    "**/*.css"
+  ]
+
+}

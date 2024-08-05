@@ -16,7 +16,7 @@ hero:
 
 features:
   - title: 高效
-    details: 使用栅格布局（Grid）、响应式、具有网格线
+    details: 使用栅格布局（Grid）、响应式
   - title: 轻量
     details: 无外部依赖
   - title: 易用

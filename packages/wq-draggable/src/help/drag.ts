@@ -1,5 +1,5 @@
 
-import { computed, onUnmounted, Ref, ref, watch } from 'vue';
+import { onUnmounted, Ref, ref, watch } from 'vue';
 import {ContentData, DragItem} from "./types";
 
 interface CurrentDragData extends DragItem {
@@ -20,7 +20,7 @@ class DragStore<T extends CurrentDragData> {
         this.moveItem.delete(key);
     }
 
-    get(key: string): undefined | DragItem {
+    get(key: string): undefined | T {
         return this.moveItem.get(key);
     }
 
@@ -47,7 +47,7 @@ class DragStore<T extends CurrentDragData> {
 /**
  * 拖拽临时数据
  */
- const dragStore = new DragStore<DragItem>();
+ const dragStore = new DragStore<CurrentDragData>();
 /**
  * 拖拽数据
  */
@@ -55,6 +55,8 @@ export const useDragStore = () => {
     return dragStore;
 }
 
+
+export type DragPosition = [number, number, number, number]
 
 /**
  * 判断是否在当前四边形内
@@ -146,3 +148,5 @@ export const getItemSizeStyle = (width: number, height: number, x: number, y: nu
         transform: `translate(${transformX}px,${transformY}px)`,
     };
 };
+
+

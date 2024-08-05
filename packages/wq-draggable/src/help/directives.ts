@@ -6,7 +6,6 @@ export const  vSize: Directive = {
     mounted: (el, binding) => {
         //  注册并使用resizeObserver
         useResizeObserver(el, (entries) => {
-            console.log(entries)
             binding.value.width = entries[0].contentRect.width
             binding.value.height = entries[0].contentRect.height
         })

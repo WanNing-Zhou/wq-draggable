@@ -1,7 +1,13 @@
 // 用于拖拽时的唯一标识
 export type DragId = string | symbol | number
 
-export interface DragItem {
+export interface BaseDrag {
+    id?:DragId,
+    x: number,
+    y: number,
+}
+
+export interface DragItem extends BaseDrag{
     id: DragId
     x: number
     y: number

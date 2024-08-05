@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { getItemSizeStyle } from '../help/drag';
+import './MoveMask.scss'
+import { getItemSizeStyle } from '../../help/drag.ts';
 
 const props = withDefaults(
 	defineProps<{
@@ -54,24 +55,4 @@ const maskStyle = computed(() => getItemSizeStyle(props.width, props.height, pro
 		</slot>
 	</div>
 </template>
-<style scoped lang="scss">
-.move-mask {
-	position: absolute;
-	left: 0;
-	top: 0;
-	pointer-events: none;
-	transition: all 0.2s;
-	z-index: 2;
-	opacity: 1;
 
-	&__default {
-		height: 100%;
-		border-radius: 6px;
-		box-sizing: border-box;
-		border: 2px solid #2867f979;
-		background-color: #2867f91c;
-		border-color: #f56f6f;
-		background-color: #ff00001f;
-	}
-}
-</style>

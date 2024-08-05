@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { DragItem as DragItemData } from '../help/types';
-import {useDragStore} from "../help/drag";
+import './PreviewItem.scss'
+import { DragItem as DragItemData } from '../../help/types.ts';
+import {useDragStore} from "../../help/drag.ts";
 
 const emits = defineEmits(['close', 'resize-start', 'resizing', 'resize-end']);
 
@@ -47,7 +48,7 @@ const onDragstart = (e:DragEvent) => {
 	unset(target);
 };
 
-const onDragend = (e) => {
+const onDragend = () => {
 	moving.value = false;
 	dragStore.remove(props.groupName);
 };
@@ -94,74 +95,4 @@ const unset = (target: HTMLElement) => {
 		</slot>
 	</div>
 </template>
-<style lang="scss" scoped>
-.preview-item {
-	position: relative;
-	box-sizing: border-box;
-	//overflow: hidden;
-	pointer-events: all;
-	opacity: 1;
-	user-select: none;
-	overflow: auto;
-	resize: both;
 
-	&__default {
-		position: absolute;
-		cursor: pointer;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		user-select: none;
-		box-sizing: border-box;
-		border-radius: 6px;
-		background-color: #efefef;
-		border: 2px solid #2c68f325;
-		&:hover {
-			border-color: #2c68f399;
-			transition: all 0.2s;
-		}
-	}
-
-	&__move {
-		position: absolute;
-		cursor: nwse-resize;
-		right: 0;
-		bottom: 0;
-		width: 20px;
-		height: 20px;
-		background: red;
-	}
-
-	.close-btn {
-		position: absolute;
-		cursor: pointer;
-		right: 4px;
-		top: 4px;
-		height: 20px;
-		width: 20px;
-
-		&:after,
-		&:before {
-			content: '';
-			background: #666;
-			width: 16px;
-			height: 2px;
-			margin: auto;
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			right: 0;
-			left: 0;
-		}
-		&:before {
-			transform: rotate(-225deg);
-			top: 0;
-		}
-		&:after {
-			transform: rotate(225deg);
-			top: 0;
-		}
-	}
-}
-</style>

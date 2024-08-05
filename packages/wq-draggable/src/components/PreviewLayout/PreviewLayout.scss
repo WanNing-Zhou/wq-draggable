@@ -1,0 +1,22 @@
+.preview-layout {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow-y: auto;
+
+  &__container {
+    display: grid;
+    row-gap: v-bind("gap+'px'");
+    column-gap: v-bind("gap+'px'");
+    grid-template-columns: repeat(v-bind('columnCount'), v-bind("boxSize.width+'px'"));
+    grid-template-rows: repeat(v-bind('rowCount'), v-bind("boxSize.height+'px'"));
+  }
+
+  &__item {
+    border-radius: v-bind('borderRadius');
+    overflow: hidden;
+  }
+  .preview-layout__item {
+    background: #646cff;
+  }
+}

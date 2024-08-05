@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import {computed, onBeforeUnmount, onMounted, reactive, ref} from 'vue';
-import { booleanIntersects, booleanWithin, useDragStore, useBoxGrid } from '../help/drag';
-import {vSize} from "../help/directives";
-import PreviewItem from './PreviewItem.vue';
-import MoveMask from './MoveMask.vue';
-import {DragId, DragItem as DragItemData} from '../help/types';
-import {ceil} from "../help/utils";
+import {computed, onBeforeUnmount, reactive, ref} from 'vue';
+import './DropContent.scss'
+import {booleanIntersects, booleanWithin, useDragStore, useBoxGrid, DragPosition} from '../../help/drag.ts';
+import {vSize} from "../../help/directives.ts";
+import PreviewItem from '../PreviewItem/PreviewItem.vue';
+import MoveMask from '../MoveMask/MoveMask.vue';
+import {DragId, DragItem as DragItemData} from '../../help/types.ts';
+import {ceil} from "../../help/utils.ts";
 
 type CallbackFun = (e: DragItemData | any, list: DragItemData[]) => Promise<boolean> | boolean;
 
@@ -65,7 +66,6 @@ const contentSize = reactive({
 const dragStore = useDragStore()
 
 const copyCallback  = (data: any) => {
-  console.log('copyCallback',data)
   if (data && data.id) {
     list.value = list.value.filter((item) => item.id !== data.id);
   }
@@ -91,7 +91,7 @@ const current = reactive({
 
 // 是否可以放置
 const isPutDown = computed(() => {
-	const currentXy = [current.x, current.y, current.x + current.w, current.y + current.h];
+	const currentXy = [current.x, current.y, current.x + current.w, current.y + current.h] as DragPosition;
 	return (
 		booleanWithin([0, 0, columnCount.value, rowCount.value], currentXy) &&
 		list.value.every((item) => item.id === current.id || !booleanIntersects([item.x, item.y, item.x + item.w, item.y + item.h], currentXy))
@@ -112,6 +112,16 @@ const getY = (num: any) => parseInt(String(num / (boxSize.value.height + props.g
 const getColumn = (num: any) => ceil(num / (boxSize.value.width + props.gap));
 // 计算行数
 const getRow = (num: any) => ceil(num / (boxSize.value.height + props.gap));
+
+const gridStyle = computed(() => {
+  return {
+    'row-gap': `${props.gap}px`,
+    'column-gap': `${props.gap}px`,
+    'grid-template-columns': `repeat(${columnCount.value}, ${boxSize.value.width}px)`,
+    'grid-template-rows': `repeat(${rowCount.value}, ${boxSize.value.height}px)`,
+
+  }
+})
 
 // 进入放置目标
 const onDragenter = (e: any) => {
@@ -148,10 +158,8 @@ const onDragleave = (e: any) => {
 const onDrop = async (e: any) => {
 	e.preventDefault();
 	current.show = false;
-	// console.log('onDrop 中 groupName', props.groupName);
 	const dragData = dragStore.get(props.groupName); // JSON.parse(e.dataTransfer.getData('application/json'))
-	// console.log(dragData);
-	if (
+  if (
 		isPutDown.value &&
 		(await props.beforeDrop(
 			{
@@ -162,7 +170,6 @@ const onDrop = async (e: any) => {
 			list.value
 		))
 	) {
-
     const tData = list.value.find((item) => item.id === dragData.id)
     // 判断该元素是否已经存在
     if(tData) {
@@ -170,9 +177,9 @@ const onDrop = async (e: any) => {
       tData.y = current.y;
     }else {
       // 当groupKey存在时, 则来源于其他组件
-      const itemData = {...dragData, x: current.x, y: current.y,}
+      const itemData = {...dragData, x: current.x, y: current.y,} as any
       delete itemData.gourpKey;
-      if(dragData.groupKey){
+      if(dragData?.groupKey){
         const orgData = dragStore.getContentData(dragData.groupKey)
         orgData.copyCallback(dragData)
       }
@@ -221,7 +228,6 @@ const onResizeStart = () => {
 
 // 调正大小时
 const onResizing = (e) => {
-	const dragData = dragStore.get(props.groupName);
 	current.w = getColumn(e.width);
 	current.h = getRow(e.height);
 };
@@ -261,6 +267,7 @@ defineExpose({
 			@dragover="onDragover($event)"
 			@dragleave.stop="onDragleave($event)"
 			@drop="onDrop($event)"
+      :style="gridStyle"
 		>
 			<template v-for="x in rowCount">
 				<div class="bg-column" v-for="y in columnCount" :key="`${x}-${y}`"></div>
@@ -275,6 +282,7 @@ defineExpose({
         :groupKey="groupKey"
 				:style="{
 					pointerEvents: current.show && item.id !== current.id ? 'none' : 'all',
+					...gridStyle
 				}"
 				@close="onRemovePreviewItem(item)"
 				@resize-start="onResizeStart"
@@ -297,40 +305,3 @@ defineExpose({
 		</div>
 	</div>
 </template>
-<style lang="scss" scoped>
-.drop-content {
-  pointer-events: none;
-	position: relative;
-	width: 100%;
-	height: 100%;
-	border-radius: 6px;
-	overflow: hidden;
-	overflow-y: auto;
-
-	&__preview,
-	&__drop-container {
-		display: grid;
-		row-gap: v-bind("gap+'px'");
-		column-gap: v-bind("gap+'px'");
-		grid-template-columns: repeat(v-bind('columnCount'), v-bind("boxSize.width+'px'"));
-		grid-template-rows: repeat(v-bind('rowCount'), v-bind("boxSize.height+'px'"));
-		.bg-column {
-			background-color: rgba(255, 255, 255, 0.2);
-			border-radius: 6px;
-			pointer-events: none;
-		}
-	}
-
-  &__drop-container {
-    pointer-events: all;
-  }
-
-	&__preview {
-		position: absolute;
-		top: 0;
-		left: 0;
-		pointer-events: none;
-		overflow: hidden;
-	}
-}
-</style>

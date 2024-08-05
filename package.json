@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "vite --config ./examples/vite.config.ts --host",
     "build": "vite build && vue-tsc",
+    "build:vue": "vite build --config ./packages/vue/vite.config.ts && vue-tsc",
     "eslint": "eslint --ext .js,.vue --ignore-path .gitignore --fix packages/vue3/src",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
