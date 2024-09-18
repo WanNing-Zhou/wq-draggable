@@ -18,10 +18,11 @@
   "types": "dist/types/index.d.ts",
   "main": "dist/lib/index.js",
   "module": "dist/es/index.mjs",
-  "style": "dist/lib/style.css",
   "license": "MIT",
   "sideEffects": [
     "**/*.css"
-  ]
-
+  ],
+  "devDependencies": {
+    "vite-plugin-css-injected-by-js": "^3.5.1"
+  }
 }

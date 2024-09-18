@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed, onBeforeUnmount, reactive, ref} from 'vue';
-import './DropContent.scss'
+// import './DropContent.scss'
 import {booleanIntersects, booleanWithin, useDragStore, useBoxGrid, DragPosition} from '../../help/drag.ts';
 import {vSize} from "../../help/directives.ts";
 import PreviewItem from '../PreviewItem/PreviewItem.vue';
@@ -305,3 +305,41 @@ defineExpose({
 		</div>
 	</div>
 </template>
+
+<style scoped lang="scss">
+.drop-content {
+  pointer-events: none;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  overflow-y: auto;
+
+  &__preview,
+  &__drop-container {
+    display: grid;
+    row-gap: v-bind("gap+'px'");
+    column-gap: v-bind("gap+'px'");
+    grid-template-columns: repeat(v-bind('columnCount'), v-bind("boxSize.width+'px'"));
+    grid-template-rows: repeat(v-bind('rowCount'), v-bind("boxSize.height+'px'"));
+    .bg-column {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+  }
+
+  &__drop-container {
+    pointer-events: all;
+  }
+
+  &__preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+}
+</style>

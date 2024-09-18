@@ -1,7 +1,6 @@
 <template>
     <div class="default-layout">
       <div class="aside">
-
         <template v-for="item in asideData"  :key="item.id">
           <drag :data="item">
             <div style="width: 100%; height: 100%; background: #646cff">{{item.key}}</div>
@@ -61,7 +60,8 @@
 </template>
 
 <script setup lang="ts">
-  import {GridDropContent,PreviewLayout, Drag} from "wq-draggable";
+  import {PreviewLayout, Drag} from "wq-draggable";
+  import {GridDropContent} from "../../../packages/wq-draggable";
   import {reactive, ref, watchEffect} from "vue";
 
 
@@ -96,8 +96,8 @@
     {
       id: 1111,
       key: 'demo-component',
-      title: '组件标题',
-      group: 'dropDrap',
+      title: '组件标题111',
+      group: 'wqdrag',
       w: 4,
       h: 4,
       x: 1,
@@ -107,7 +107,7 @@
       id: 2222,
 
       key: 'demo-component',
-      title: '组件标题',
+      title: '组件标题222',
       w: 5,
       h: 5,
       x: 5,

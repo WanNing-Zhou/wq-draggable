@@ -149,4 +149,11 @@ export const getItemSizeStyle = (width: number, height: number, x: number, y: nu
     };
 };
 
+/**
+ * 元素是否发生碰撞
+ */
+export const collisionDetection = (list: DragItem[], newItem: DragItem) => {
+    return list.filter((item)=> item.id !== newItem.id).some((item)=> booleanIntersects([item.x, item.y, item.x + item.w, item.y + item.h], [newItem.x, newItem.y, newItem.x + newItem.w, newItem.y + newItem.h]))
+}
+
 

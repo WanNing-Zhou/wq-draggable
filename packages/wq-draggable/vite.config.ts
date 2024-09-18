@@ -1,10 +1,15 @@
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+// vite-plugin-css-injected-by-js 是一个 Vite 插件，它的主要功能是将 CSS 代码通过 JavaScript 注入到页面中。
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 export default defineConfig({
     plugins: [
         vue(),
+
+        cssInjectedByJsPlugin()
+
         // VitePluginStyleInject('wq-draggable')
     ],
     build: {
